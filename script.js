@@ -1,7 +1,6 @@
 let expenses = [];
 let currentFilter = "All";
 
-// ===== LOAD DATA =====
 window.onload = function () {
   let data = localStorage.getItem("expenses");
    if (data) {
@@ -11,12 +10,10 @@ window.onload = function () {
   updateSummary();
 };
 
-// ===== SAVE DATA =====
 function saveData() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }
 
-// ===== ADD =====
 function addExpense() {
   let title = document.getElementById("title").value.trim();
   let amount = Number(document.getElementById("amount").value);
@@ -40,13 +37,11 @@ function addExpense() {
   filterCategory(currentFilter);
   updateSummary();
 
-  // reset inputs
   document.getElementById("title").value = "";
   document.getElementById("amount").value = "";
   document.getElementById("category").value = "Food";
 }
 
-// ===== DISPLAY =====
 function displayExpenses(arr) {
   let list = document.getElementById("list");
   list.innerHTML = "";
@@ -54,11 +49,9 @@ function displayExpenses(arr) {
   arr.forEach(exp => {
     let li = document.createElement("li");
 
-    // text
     let text = document.createElement("span");
     text.textContent = `${exp.title} - Rs ${exp.amount} (${exp.category})`;
 
-    // button
     let btn = document.createElement("button");
     btn.textContent = "X";
     btn.className = "delete";
@@ -72,7 +65,6 @@ function displayExpenses(arr) {
   });
 }
 
-// ===== DELETE =====
 function deleteExpense(id) {
   expenses = expenses.filter(exp => exp.id !== id);
   saveData();
@@ -81,7 +73,6 @@ function deleteExpense(id) {
   updateSummary();
 }
 
-// ===== FILTER =====
 function filterCategory(cat) {
   currentFilter = cat;
 
@@ -93,7 +84,6 @@ function filterCategory(cat) {
   }
 }
 
-// ===== SUMMARY =====
 function updateSummary() {
   let total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
   document.getElementById("summary").innerText = "Monthly Total: Rs " + total;
